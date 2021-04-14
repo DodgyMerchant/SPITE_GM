@@ -74,11 +74,13 @@ switch(player_status)
 	func_combat_brace_active()
 	combat_brace
 	
-	
+	func_player_speed_reset();
+	func_anim_sprite_set_full(spr_p);
+	img_looped
+	if sprite_index !=
 	
 	
 	*/
-	
 	
 	
 	if _moving//moving
@@ -86,13 +88,8 @@ switch(player_status)
 		if _input_move_any//wanting to move
 			{
 			if sprite_index != spr_player_walk_h
-			if sprite_index != spr_player_walk_h_start
 				{
 				func_anim_sprite_set_full(spr_player_walk_h_start);
-				}
-			else if img_looped
-				{
-				func_anim_sprite_set_full(spr_player_walk_h);
 				}
 			}
 		//not wanting to move but moving

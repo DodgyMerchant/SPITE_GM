@@ -77,6 +77,9 @@ func_player_status_set = function(_status)
 		#endregion
 		#region combat
 		case PLAYER_STATUS.combat:
+			func_anim_sprite_set_full(spr_player_combat_transition);
+			
+			
 			
 			//stamina
 			player_stamina_recovery_time= combat_stamina_recovery_time;
@@ -86,6 +89,9 @@ func_player_status_set = function(_status)
 		#region exhausted
 		case PLAYER_STATUS.exhausted:
 			func_anim_sprite_set_full(spr_player_exhausted_standing);
+			
+			
+			
 			
 			//stamina
 			player_stamina_recovery_time= 0;
@@ -109,7 +115,8 @@ func_player_status_set = function(_status)
 		#endregion
 		#region sitting
 		case PLAYER_STATUS.sitting:
-			func_anim_sprite_set_full(spr_player_sitting);
+			func_anim_sprite_set_full(spr_player_standup);
+			func_anim_image_set_speed(0);
 			
 			//stamina
 			player_stamina_recovery_time= player_sitting_stamina_recovery_time;
@@ -309,8 +316,10 @@ combat_brace = false;//is the player braced
 combat_brace_count = 0;//counter
 combat_brace_time = global.game_speed * 0.5;//time it takes to brace
 
+combat_brace_pushback = 2;
 
-
+combat_brace_stamina_drain = 0;	//constant stamina drain
+combat_brace_stamina_hit = 0;	//stamina cost of a blocked attack
 
 func_combat_brace_active = function()// if the brace is in progress  | NOT IF BRACED  =>  combat_brace==true
 	{
