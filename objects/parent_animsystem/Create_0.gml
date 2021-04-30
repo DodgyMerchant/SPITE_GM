@@ -21,7 +21,36 @@ img_type = IMG_TYPE.forward;	//how the image speed is applied
 img_display_x = floor(xstart);	//where the sprite is being displayed	| needs to be done for Progress Based Index display
 img_display_y = floor(ystart);
 img_PBI_list = -1;	//stores the PBI list for less calls
+img_PBI_x_progresion_inversion = false;	//progression inversion on the x axis
+img_PBI_y_progresion_inversion = false;	//progression inversion on the y axis
+#region ///////////// progression inversion INFO //////////////////
+/*////////////////////////////////////////
+///	progression inversion is a system how NEGATIVE x or y progression interacts with the image_index 
+///	
+///	normally this is disabled, which means that negative progression still increments the image index normally (positive).
+///	
+///	if enabled negative progress on the axis in question will decrement the image_index causing the animation to be played backwards.
+///	for utility the image_xscale will define what is negativ progression
+///	
+///	sign(movement) != image_xscale  =>  negative progression
+///	
+///	
+///	this enables the user to make more variant animations work
+///	f.e.	make backwards walking use the same animation as forward walking but in reverse
+///			but still able to to invert image_xscale to change the forward walking direction
+///	
+*/////////////////////////////////////////
 
+////////////////maybe changes in the future////////
+///
+/// -atm negative progression is favored t.m. if one or more axis have negative progression the overall progression is negative
+///		maybe a option foir this is needed
+///
+///
+///
+///
+
+#endregion
 
 func_anim_index_reset = function()			//resets values assosiated with the img_index
 	{
@@ -48,7 +77,7 @@ func_anim_index_set = function(_val)
 	//is new image?
 	if floor(img_index) != floor(_val)
 		{//new image
-		show_debug_message("index set frash! "+string(img_index)+"-"+string(_val));
+		//if global.debug show_debug_message("index set frash! "+string(img_index)+"-"+string(_val));
 		img_index_fresh = true;
 		}
 	else
@@ -58,7 +87,7 @@ func_anim_index_set = function(_val)
 	img_index = _val;
 	}
 
-func_anim_sprite_set_full = function(_spr)	//sets the sprite ald updates all assosiated properties (speed,reset)
+func_anim_sprite_set_full = function(_spr)	//sets the sprite ald updates all assosiated properties (speed,reset) | checks for PBI
 	{
 	/*///////////////////////////////////
 	PLEASE UPDATE PLAYER SPEED BEFOREHAND
@@ -109,7 +138,7 @@ func_anim_spriteupdateimageset_speed = function(_spr,_spd)	//update player image
 	
 	func_anim_image_set_speed(_speed);//set player speed from sprite speed
 	
-	if global.debug show_debug_message("img_speed change to: "+string(_speed)+"| sprite: "+string(sprite_get_name(_spr)));
+	//if global.debug show_debug_message("img_speed change to: "+string(_speed)+"| sprite: "+string(sprite_get_name(_spr)));
 	}
 
 func_anim_drawself = function() //simple draw function using the anim system

@@ -77,8 +77,8 @@
   ],
   "nineSlice": null,
   "parent": {
-    "name": "sprites",
-    "path": "folders/Player/sprites.yy",
+    "name": "Idle",
+    "path": "folders/Player/sprites/anim/Idle.yy",
   },
   "resourceVersion": "1.0",
   "name": "spr_player_idle1",

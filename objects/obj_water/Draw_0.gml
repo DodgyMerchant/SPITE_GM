@@ -2,9 +2,10 @@
 
 
 
-#region water
+#region blood
 
-//draw_surface(global.Water_surf,global.View_x,global.View_y);
+//draw_surface(global.Blood_surf, global.View_x - global.View_x_frac, global.View_y - global.View_y_frac);
+draw_surface(global.Blood_surf, global.View_x, global.View_y);
 
 
 #endregion
@@ -45,3 +46,7 @@ for (var i = 0; i < _size; i++)
 #endregion
 
 Func_draw_reset_alpha();
+
+
+
+

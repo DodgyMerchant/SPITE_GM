@@ -13,9 +13,9 @@ draw_clear_alpha(water_col,1);
 
 //global.Water_surf = Func_SH_continuous_hygene(global.Water_surf,global.View_width,global.View_height);
 
-var _light_col = make_color_rgb(144,11,9);
+var _light_col = make_color_rgb(80,5,3);//(144,11,9);
 var _dark_col = water_col;//c_black
-var _fade_dist = 24;//24
+var _fade_dist = 22;//24
 var _time = current_time*.01;
 
 
@@ -27,6 +27,15 @@ shader_set_uniform_f(shader_get_uniform(shd_reflection,"u_fFadeDist"),	_fade_dis
 shader_set_uniform_f(shader_get_uniform(shd_reflection,"u_fTexSize"),	texture_get_texel_width(sprite_get_texture(spr_player_walk_h,0)));//sprite might not work
 shader_set_uniform_f(shader_get_uniform(shd_reflection,"u_fTime"),		_time);
 shader_reset();
+
+
+
+
+#endregion
+#region blood surface
+
+global.Blood_surf = Func_SH_continuous_hygene(global.Blood_surf,global.View_width,global.View_height);
+
 
 
 

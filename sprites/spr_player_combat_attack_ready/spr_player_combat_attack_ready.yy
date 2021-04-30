@@ -81,8 +81,8 @@
   ],
   "nineSlice": null,
   "parent": {
-    "name": "combat",
-    "path": "folders/Player/sprites/anim/combat.yy",
+    "name": "attack",
+    "path": "folders/Player/sprites/anim/combat/attack.yy",
   },
   "resourceVersion": "1.0",
   "name": "spr_player_combat_attack_ready",

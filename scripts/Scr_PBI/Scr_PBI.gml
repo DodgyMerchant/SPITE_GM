@@ -99,6 +99,13 @@ function Func_PBI_spr_exists(_spr)	//if the sprite exists in the PBI system
 	}
 
 //create PBIs for sprites
+#region idle
 func_PBI_create(spr_player_walk_h,2,2,1,1,2);
 func_PBI_create(spr_player_walk_h_start,1,1);
 func_PBI_create(spr_player_walk_h_stop,1,1);
+#endregion
+#region combat
+func_PBI_create(spr_player_combat_walk,1,1,1,1);
+
+
+#endregion

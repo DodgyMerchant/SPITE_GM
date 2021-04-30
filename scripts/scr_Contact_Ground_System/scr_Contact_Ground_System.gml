@@ -246,6 +246,7 @@ var func_contact_add = function(_spr,_index,_type,_x,_y)
 //CG_TYPE.latest		//big ripple for new contact with the water
 //CG_TYPE.continued	//for stationary contact with watrer
 
+#region idle
 #region walk
 
 #region walk_h
@@ -299,8 +300,181 @@ func_contact_add(spr_player_idle1,2,CG_TYPE.continued,	12,	21);
 
 
 #endregion
+#endregion
+#region combat
+#region other
+#region idle
+//0
+func_contact_add(spr_player_combat_idle,0,CG_TYPE.continued,	0,	22);//5 9
+func_contact_add(spr_player_combat_idle,0,CG_TYPE.continued,	7,	22);
+//1
+func_contact_add(spr_player_combat_idle,1,CG_TYPE.continued,	0,	22);//5 9
+func_contact_add(spr_player_combat_idle,1,CG_TYPE.continued,	7,	22);
+//2
+func_contact_add(spr_player_combat_idle,2,CG_TYPE.continued,	0,	22);//5 9
+func_contact_add(spr_player_combat_idle,2,CG_TYPE.continued,	7,	22);
 
 
+#endregion
+#region walk
+//0
+func_contact_add(spr_player_combat_walk,0,CG_TYPE.continued,	0,	22);//5 9
+func_contact_add(spr_player_combat_walk,0,CG_TYPE.continued,	7,	22);//5 9
+//1
+func_contact_add(spr_player_combat_walk,1,CG_TYPE.continued,	6,	22);//5 9
+//2
+func_contact_add(spr_player_combat_walk,2,CG_TYPE.latest,		2,	22);//5 9
+func_contact_add(spr_player_combat_walk,2,CG_TYPE.continued,	5,	22);//5 9
+//3
+func_contact_add(spr_player_combat_walk,3,CG_TYPE.continued,	1,	22);//5 9
+
+
+
+
+#endregion
+#region transition
+//0
+func_contact_add(spr_player_combat_transition,0,CG_TYPE.continued,	4,	22);//7 9
+func_contact_add(spr_player_combat_transition,0,CG_TYPE.continued,	9,	22);
+//1
+func_contact_add(spr_player_combat_transition,1,CG_TYPE.latest,	3,	22);
+func_contact_add(spr_player_combat_transition,1,CG_TYPE.continued,	9,	22);
+//2
+func_contact_add(spr_player_combat_transition,2,CG_TYPE.continued,	3,	22);
+func_contact_add(spr_player_combat_transition,2,CG_TYPE.continued,	9,	22);
+
+#endregion
+#region turnaround
+
+//0
+func_contact_add(spr_player_combat_turnaround,0,CG_TYPE.continued,	10,	22);//8 9
+//1
+func_contact_add(spr_player_combat_turnaround,1,CG_TYPE.latest,		3,	22);
+func_contact_add(spr_player_combat_turnaround,1,CG_TYPE.continued,	10,	22);
+//2
+func_contact_add(spr_player_combat_turnaround,2,CG_TYPE.continued,	3,	22);
+
+#endregion
+#endregion
+#region brace
+#region ready
+//0
+func_contact_add(spr_player_combat_brace_ready,0,CG_TYPE.continued,	0,	21);//5 8
+func_contact_add(spr_player_combat_brace_ready,0,CG_TYPE.continued,	7,	21);
+//1
+func_contact_add(spr_player_combat_brace_ready,1,CG_TYPE.continued,	0,	21);
+func_contact_add(spr_player_combat_brace_ready,1,CG_TYPE.continued,	7,	21);
+
+
+#endregion
+#region idle
+
+//0
+func_contact_add(spr_player_combat_brace_idle,0,CG_TYPE.continued,	0,	20);//5 7
+func_contact_add(spr_player_combat_brace_idle,0,CG_TYPE.latest,		7,	20);
+//1
+func_contact_add(spr_player_combat_brace_idle,1,CG_TYPE.continued,	0,	20);
+func_contact_add(spr_player_combat_brace_idle,1,CG_TYPE.latest,		8,	20);
+
+#endregion
+#region hit
+
+//moving
+//0
+func_contact_add(spr_player_combat_brace_hit_moving,0,CG_TYPE.continued,	9,	22);//14 9
+//1
+func_contact_add(spr_player_combat_brace_hit_moving,1,CG_TYPE.continued,	9,	22);
+func_contact_add(spr_player_combat_brace_hit_moving,1,CG_TYPE.latest,		15,	22);
+//2
+func_contact_add(spr_player_combat_brace_hit_moving,2,CG_TYPE.continued,	15,	22);
+//3
+func_contact_add(spr_player_combat_brace_hit_moving,3,CG_TYPE.latest,		7,	22);
+func_contact_add(spr_player_combat_brace_hit_moving,3,CG_TYPE.continued,	15,	22);
+//4
+func_contact_add(spr_player_combat_brace_hit_moving,4,CG_TYPE.continued,	7,	22);
+func_contact_add(spr_player_combat_brace_hit_moving,4,CG_TYPE.continued,	14,	22);//mnovement but no new contact
+//5
+func_contact_add(spr_player_combat_brace_hit_moving,5,CG_TYPE.continued,	7,	22);
+func_contact_add(spr_player_combat_brace_hit_moving,5,CG_TYPE.continued,	14,	22);
+
+#endregion
+#endregion
+#region attack
+#region ready
+//0
+func_contact_add(spr_player_combat_attack_ready,0,CG_TYPE.continued,	0,	27);//5 14
+func_contact_add(spr_player_combat_attack_ready,0,CG_TYPE.continued,	7,	27);
+//1
+func_contact_add(spr_player_combat_attack_ready,1,CG_TYPE.continued,	0,	27);
+func_contact_add(spr_player_combat_attack_ready,1,CG_TYPE.continued,	7,	27);
+//2
+func_contact_add(spr_player_combat_attack_ready,2,CG_TYPE.continued,	0,	27);
+func_contact_add(spr_player_combat_attack_ready,2,CG_TYPE.continued,	7,	27);
+//3
+func_contact_add(spr_player_combat_attack_ready,3,CG_TYPE.continued,	0,	27);
+func_contact_add(spr_player_combat_attack_ready,3,CG_TYPE.continued,	7,	27);
+
+#endregion
+#region slash
+
+//0
+func_contact_add(spr_player_combat_attack_slash,0,CG_TYPE.continued,	1,	28);//6 15
+func_contact_add(spr_player_combat_attack_slash,0,CG_TYPE.continued,	9,	28);
+//1
+func_contact_add(spr_player_combat_attack_slash,1,CG_TYPE.latest,	0,	28);
+func_contact_add(spr_player_combat_attack_slash,1,CG_TYPE.continued,	9,	28);
+//2
+func_contact_add(spr_player_combat_attack_slash,2,CG_TYPE.continued,	0,	28);
+func_contact_add(spr_player_combat_attack_slash,2,CG_TYPE.continued,	9,	28);
+func_contact_add(spr_player_combat_attack_slash,2,CG_TYPE.latest,	22,	28); //sword
+
+
+#endregion
+#region recovery
+
+//0
+func_contact_add(spr_player_combat_attack_recovery,0,CG_TYPE.continued,	0,	19);//6 6
+func_contact_add(spr_player_combat_attack_recovery,0,CG_TYPE.continued,	9,	19);
+//1
+func_contact_add(spr_player_combat_attack_recovery,1,CG_TYPE.continued,	1,	19);
+func_contact_add(spr_player_combat_attack_recovery,1,CG_TYPE.continued,	9,	19);
+
+//sword fx
+//0
+func_contact_add(spr_player_combat_attack_recovery,0,CG_TYPE.continued, 22,	19);//6 6
+func_contact_add(spr_player_combat_attack_recovery,0,CG_TYPE.continued,	20,	19);
+
+
+
+#endregion
+#region whiff
+
+//0
+func_contact_add(spr_player_combat_attack_whiff,0,CG_TYPE.latest,		2,	22);//8 9
+func_contact_add(spr_player_combat_attack_whiff,0,CG_TYPE.continued,	10,	22);
+//1
+func_contact_add(spr_player_combat_attack_whiff,1,CG_TYPE.latest,		3,	22);
+func_contact_add(spr_player_combat_attack_whiff,1,CG_TYPE.continued,	10,	22);
+//2
+func_contact_add(spr_player_combat_attack_whiff,2,CG_TYPE.latest,		2,	22);
+func_contact_add(spr_player_combat_attack_whiff,2,CG_TYPE.latest,		11,	22);
+//3
+func_contact_add(spr_player_combat_attack_whiff,3,CG_TYPE.latest,		0,	22);
+func_contact_add(spr_player_combat_attack_whiff,3,CG_TYPE.latest,		11,	22);
+//4
+func_contact_add(spr_player_combat_attack_whiff,4,CG_TYPE.latest,		1,	22);
+func_contact_add(spr_player_combat_attack_whiff,4,CG_TYPE.continued,	11,	22);
+//5
+func_contact_add(spr_player_combat_attack_whiff,5,CG_TYPE.latest,		2,	22);
+func_contact_add(spr_player_combat_attack_whiff,5,CG_TYPE.latest,		10,	22);
+//6
+func_contact_add(spr_player_combat_attack_whiff,6,CG_TYPE.latest,		3,	22);
+func_contact_add(spr_player_combat_attack_whiff,6,CG_TYPE.continued,	10,	22);
+
+
+#endregion
+#endregion
+#endregion
 
 #endregion
 

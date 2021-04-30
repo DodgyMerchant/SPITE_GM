@@ -7,6 +7,8 @@ depth = 15000;
 
 #region general
 
+window_set_caption("S P I T E");
+
 func_init_game = function() //initialize game and game room
 	{
 	#region background
@@ -17,7 +19,7 @@ func_init_game = function() //initialize game and game room
 	
 	with(obj_water)
 		{
-		water_col = layer_background_get_blend(_bid);
+		water_clear_col = layer_background_get_blend(_bid);
 		}
 	
 	#endregion
@@ -41,3 +43,7 @@ Scr_PBI();
 scr_Contact_Ground_System(); //Func_Splosh_get_activate(_spr,_index)
 
 #endregion
+
+
+
+

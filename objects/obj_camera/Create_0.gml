@@ -1,5 +1,7 @@
 /// @desc 
 
+
+#region camera create
 /*//////////////
 
 100 x 100
@@ -12,6 +14,8 @@
 
 global.View_x = 0;
 global.View_y = 0;
+global.View_x_frac = 0;	//actual view position
+global.View_y_frac = 0;
 
 application_surface_enable(false);
 
@@ -30,7 +34,24 @@ view_surf = -1;
 
 window_set_size(global.View_width * window_size, global.View_height * window_size);
 alarm[0]=1;
+#endregion
+
+
+#region camera seek
+
+camera_seek_pos_x = x;
+camera_seek_pos_y = y;
+camera_seek_target_x = x;
+camera_seek_target_y = y;
+camera_seek_type = CAMERA_SEEK_TYPE.linear;
+camera_seek_val = 0;
+enum CAMERA_SEEK_TYPE
+	{
+	none = -1,
+	linear = -2,
+	fraction = -3
+	}
 
 
 
-
+#endregion

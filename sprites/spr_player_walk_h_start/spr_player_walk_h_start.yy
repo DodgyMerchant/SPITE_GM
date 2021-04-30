@@ -73,8 +73,8 @@
   ],
   "nineSlice": null,
   "parent": {
-    "name": "Walking",
-    "path": "folders/Player/sprites/anim/Walking.yy",
+    "name": "Idle",
+    "path": "folders/Player/sprites/anim/Idle.yy",
   },
   "resourceVersion": "1.0",
   "name": "spr_player_walk_h_start",

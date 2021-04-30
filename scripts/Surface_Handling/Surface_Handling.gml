@@ -1,7 +1,5 @@
 
 
-
-
 function Func_SH_continuous_hygene(_surf,_w,_h)
 	{//returns the surface	///NEEDS TO BE RETURNED
 	
