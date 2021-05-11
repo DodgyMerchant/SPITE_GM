@@ -16,8 +16,9 @@ enum PLAYER_STATUS
 	idle,
 	combat,
 	exhausted,
-	laying,
-	sitting,
+	//laying,	//replaced by downed
+	//sitting,	//replaced by downed
+	downed,
 	anim_lock,
 	laying_menu //not implemented
 	}
@@ -54,14 +55,9 @@ func_player_status_set = function(_status)
 			
 		break;
 		#endregion
-		#region laying
-		case PLAYER_STATUS.laying:
-			situp_value=0;
-		break;
-		#endregion
-		#region sitting
-		case PLAYER_STATUS.sitting:
-			
+		#region downed
+		case PLAYER_STATUS.downed:
+			downed_value=0;
 		break;
 		#endregion
 		#region anim_lock
@@ -110,45 +106,39 @@ func_player_status_set = function(_status)
 			//cam
 			Func_camera_seek_set_type(CAMERA_SEEK_TYPE.fraction,8);
 			
-			func_anim_sprite_set_full(spr_player_exhausted_standing);
+			//no sprite set		//is done in sript
+			//func_anim_sprite_set_full(spr_player_exhausted_standing);
 			
+			#region end calc
+			/*
+			player_stamina_max
+			player_stamina
 			
+			player_exhausted_recovery //recovery per frame
+			*/
+			var _speed = sprite_get_speed( func_player_exhausted_sprite_get(sprite_index,ExSprType.endt) );
 			
+			//get length of animation in frames
+			player_exhausted_anim_end = _speed * global.game_speed;
+			
+			#endregion
 			
 			//stamina
 			player_stamina_recovery_time= 0;
 			player_stamina_recovery		= player_exhausted_recovery;
 		break;
 		#endregion
-		#region laying
-		case PLAYER_STATUS.laying:
-			//cam
-			Func_camera_seek_set_type(CAMERA_SEEK_TYPE.fraction,8);
+		#region downed
+		case PLAYER_STATUS.downed:
+			////cam
+			//Func_camera_seek_set_type(CAMERA_SEEK_TYPE.fraction,8);
 			
-			//sprite
-			func_anim_sprite_set_full(spr_player_situp);
-			func_anim_image_set_speed(0);
-			func_anim_index_reset();
-			
-			//values
-			situp_value = 0;
+			////values
+			downed_value = 0;
 			
 			//stamina
 			player_stamina_recovery_time= -1;
 			player_stamina_recovery		= 0;
-		break;
-		#endregion
-		#region sitting
-		case PLAYER_STATUS.sitting:
-			//cam
-			Func_camera_seek_set_type(CAMERA_SEEK_TYPE.fraction,8);
-			
-			func_anim_sprite_set_full(spr_player_standup);
-			func_anim_image_set_speed(0);
-			
-			//stamina
-			player_stamina_recovery_time= player_sitting_stamina_recovery_time;
-			player_stamina_recovery		= player_sitting_stamina_recovery;
 		break;
 		#endregion
 		#region anim_lock
@@ -215,36 +205,55 @@ func_player_speed_reset = function()//sets the players applied speed to 0
 	player_spd_y = 0;
 	}
 
-func_player_exhausted = function()//decides what happens to the player when exhaused
+func_player_stop = function()//sets the players applied speed to 0
 	{
+	func_player_speed_reset();	//stop player movement
+	player_speed=0;				//player cant move
+	}
+
+func_player_exhausted = function(_hit)//decides what happens to the player when exhaused
+	{
+	//var _moving = player_spd_x!=0 or player_spd_y!=0;	//player moving
+	
+	#region sprite set
+	
+	var _sprite_family = ExSprFam.stand;
 	//what event this triggered and what to do
 	switch(player_status)
 		{
 		#region idle
 		case PLAYER_STATUS.idle:
-			
-			
-			
+				
+				_sprite_family = ExSprFam.front;
 			
 		break;
 		#endregion
-		#region
+		#region combat
 		case PLAYER_STATUS.combat:
 			
-			
-			
-			
+			if _hit
+				{
+				_sprite_family = ExSprFam.back;
+				}
+			else//not hit
+				{
+				_sprite_family = ExSprFam.stand;
+				}
 			
 		break;
 		#endregion
 		}
 	
+	//if no special sprite  default to standing
+	
+	func_anim_sprite_set_full( func_player_exhausted_sprite_get_from_family(_sprite_family,ExSprType.start) );
+	
+	#endregion
+	
+	//speed
+	func_player_stop();
+	
 	func_player_status_set(PLAYER_STATUS.exhausted);
-	
-	
-	
-	
-	
 	}
 
 func_player_check_enemies = function()
@@ -265,13 +274,16 @@ func_player_check_enemies = function()
 
 func_player_hit = function(_hit_dir) //manages what happens when the player is hit
 	{
-	var _hit_dir2 = (_hit_dir < 90 ? 0 : 180)
+	var _hit_dir2 = ((_hit_dir < 90 or _hit_dir > 270) ? 0 : 180)
 	
+	
+	#region brace maybe
 	if player_stamina!=0
 	//if able to deflect hit
 	if player_status == PLAYER_STATUS.combat and combat_brace
 	//if hit direction is right
-	if (combat_direction == COMBAT_DIR.right and _hit_dir2 == 180) or (combat_direction == COMBAT_DIR.left and _hit_dir2 == 0)
+	//if (combat_direction == COMBAT_DIR.right and _hit_dir2 == 180) or (combat_direction == COMBAT_DIR.left and _hit_dir2 == 0)
+	if combat_direction != dcos(_hit_dir2) //if hit direction is not the facing direction
 	//stamina lower than required amount
 	if player_stamina >= combat_brace_stamina_hit
 		{
@@ -279,10 +291,22 @@ func_player_hit = function(_hit_dir) //manages what happens when the player is h
 		func_player_combat_brace_hit();
 		return //end script
 		}
+	else//if stamina is not enough get exhausted
+		{
+		func_player_exhausted(true);
+		}
+	#endregion
+	#region hit set
 	
+	if image_xscale == dcos(_hit_dir2)//if hit in looking direction
+		func_anim_sprite_set_full(spr_player_hit_front);
+	else	//hit against looking direction
+		func_anim_sprite_set_full(spr_player_hit_back);
 	
-	//sprite change
+	func_player_status_set(PLAYER_STATUS.anim_lock);
 	
+	#endregion
+	#region blood
 	//blood
 	var _num = 12;
 	var _angle_lee = 20;
@@ -297,7 +321,7 @@ func_player_hit = function(_hit_dir) //manages what happens when the player is h
 	var _arch_max = 6;
 	
 	Func_blood_drop_create(_num,x,y,bbox_bottom,_spd_min,_spd_max,_size,_puddle_min,_puddle_max,_arch_min,_arch_max,_hit_dir - _angle_lee,_hit_dir + _angle_lee,_dist_min,_dist_max);
-	
+	#endregion
 	show_debug_message("///////////PLAYER HIT///////////")
 	
 	}
@@ -354,14 +378,9 @@ func_player_stamina_recovery_enable = function(_enable) //enable and disable rec
 				player_stamina_recovery_time= 0;
 			break;
 			#endregion
-			#region laying
-			case PLAYER_STATUS.laying:
+			#region downed
+			case PLAYER_STATUS.downed:
 				player_stamina_recovery_time= -1;
-			break;
-			#endregion
-			#region sitting
-			case PLAYER_STATUS.sitting:
-				player_stamina_recovery_time= player_sitting_stamina_recovery_time;
 			break;
 			#endregion
 			default: show_debug_message("func_player_stamina_recovery_enable /// STATUS NOT FOUND!!!");
@@ -384,25 +403,18 @@ idle_stamina_recovery = 1;
 
 
 #endregion
-#region laying & sitting
+#region downed
 
-sit_cam_offset_x = -3;
-sit_cam_offset_y = +3;
-situp_value = 0;
-situp_value_max = 100;
-situp_value_add = 10;
-situp_value_decrease = 1;
-situp_stamina_drain = 1;
+downed_value = 0;
+downed_value_max = 100;
+downed_value_add = 10;
+downed_value_decrease = 1;
+downed_stamina_drain = 1;
 
-laying_cam_offset_x = -6;
-laying_cam_offset_y = 3;
-laying_timeout_decay = player_stamina_max / ( global.game_speed * 30 );	//time till player passes out DEATH
+downed_cam_offset_x = -6;
+downed_cam_offset_y = 3;
+downed_timeout_decay = player_stamina_max / ( global.game_speed * 30 );	//time till player passes out DEATH
 
-//standup_stamina_drain = (player_stamina_max * 0.5) / (sprite_get_number(spr_player_standup) * sprite_get_speed(spr_player_standup));
-standup_stamina_drain = 0.5;
-
-player_sitting_stamina_recovery_time = global.game_speed * 0.3;
-player_sitting_stamina_recovery = player_stamina_max / ( global.game_speed * 7);
 
 
 #endregion
@@ -534,8 +546,7 @@ func_player_combat_direction_change = function()	//changing player combat direct
 	func_player_status_set(PLAYER_STATUS.anim_lock);
 	func_anim_sprite_set_full(spr_player_combat_turnaround);
 	//speed
-	func_player_speed_reset();
-	player_speed=0;
+	func_player_stop();
 	}
 
 
@@ -553,12 +564,137 @@ combat_stamina_recovery =		0.1;
 #region exhausted
 
 player_exhausted_recovery = player_stamina_max / (global.game_speed * 5);
+player_exhausted_anim_end = 0;	//when the transition animation is going to be playerd | colculated to be pßlayed before the stamina reaches 100%
 
+enum ExSprFam //exhaust sprite family
+	{
+	back,
+	front,
+	stand
+	}
+enum ExSprType//exhaust sprite type
+	{
+	start,
+	loop,
+	endt
+	}
+
+func_player_exhausted_sprite_get_family = function(_spr)
+	{
+	/*
+	FAMILY:
+	back	= 1
+	front	= 2
+	stand	= 3
+	*/
+	
+	switch(_spr)
+		{
+		case spr_player_exhausted_back_fall_start :
+		case spr_player_exhausted_back_fall_loop :
+		case spr_player_exhausted_back_fall_end :
+		return ExSprFam.back;
+		break;
+		case spr_player_exhausted_front_fall_start :
+		case spr_player_exhausted_front_fall_loop :
+		case spr_player_exhausted_front_fall_end :
+		return ExSprFam.front;
+		break;
+		case spr_player_exhausted_stand_start :
+		case spr_player_exhausted_stand_loop :
+		case spr_player_exhausted_stand_end :
+		return ExSprFam.stand;
+		break;
+		}
+	}
+
+func_player_exhausted_sprite_get_type = function(_spr)
+	{
+	/*
+	type:
+	start	= 1
+	loop	= 2
+	end		= 3
+	*/
+	switch(_spr)
+		{
+		case spr_player_exhausted_back_fall_start :
+		case spr_player_exhausted_front_fall_start :
+		case spr_player_exhausted_stand_start :
+		return ExSprType.start;
+		break;
+		case spr_player_exhausted_back_fall_loop :
+		case spr_player_exhausted_front_fall_loop :
+		case spr_player_exhausted_stand_loop :
+		return ExSprType.loop;
+		break;
+		case spr_player_exhausted_back_fall_end :
+		case spr_player_exhausted_front_fall_end :
+		case spr_player_exhausted_stand_end :
+		return ExSprType.endt;
+		break;
+		}
+	}
+
+func_player_exhausted_sprite_get_from_family = function(_family,_type)
+	{
+	//returns the wanted sprite fromn the exhaust sprite family
+	/*
+	FAMILY:
+	back	= 1
+	front	= 2
+	stand	= 3
+	*/
+	/*
+	WANT:
+	1	= start
+	2	= loop
+	3	= end
+	*/
+	
+	switch(_family)
+		{
+		case ExSprFam.back:
+		switch(_type)
+			{
+			case ExSprType.start:	return spr_player_exhausted_back_fall_start;
+			case ExSprType.loop:	return spr_player_exhausted_back_fall_loop;
+			case ExSprType.endt:	return spr_player_exhausted_back_fall_end;
+			}
+		break;
+		case ExSprFam.front:
+		switch(_type)
+			{
+			case ExSprType.start:	return spr_player_exhausted_front_fall_start;
+			case ExSprType.loop:	return spr_player_exhausted_front_fall_loop;
+			case ExSprType.endt:	return spr_player_exhausted_front_fall_end;
+			}
+		break;
+		case ExSprFam.stand:
+		switch(_type)
+			{
+			case ExSprType.start:	return spr_player_exhausted_stand_start;
+			case ExSprType.loop:	return spr_player_exhausted_stand_loop;
+			case ExSprType.endt:	return spr_player_exhausted_stand_end;
+			}
+		break;
+		}
+	}
+
+func_player_exhausted_sprite_get = function(_spr,_want)
+	{
+	//give any of a sprite exhasut family and get the wanted sprite returned of that family
+	/*
+	WANT:
+	1	= start
+	2	= loop
+	3	= end
+	*/
+	
+	return func_player_exhausted_sprite_get_from_family( func_player_exhausted_sprite_get_family(_spr) ,_want);
+	}
 
 #endregion
-
-
-
 
 
 

@@ -17,22 +17,19 @@ if keyboard_check_pressed(ord("R"))
 	game_restart();
 	}
 #endregion
-#region o		debug fallover
+#region o		debug fallover /////not in use
 if keyboard_check_pressed(ord("O"))
 	{
-	with obj_player {func_player_status_set(PLAYER_STATUS.laying)}
+	
 	}
 
 #endregion
-#region p		debug combat
+#region p		stamina = 0
 if keyboard_check_pressed(ord("P"))
 	{
 	with obj_player
 		{
-		if player_status == PLAYER_STATUS.idle
-			func_player_status_set(PLAYER_STATUS.combat);
-		else if player_status == PLAYER_STATUS.combat
-			func_player_status_set(PLAYER_STATUS.idle);
+		player_stamina = 0;
 		}
 	}
 

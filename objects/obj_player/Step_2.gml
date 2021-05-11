@@ -8,7 +8,7 @@ event_inherited();
 #region image
 
 var _input_move_any = input_x!=0 or input_y!=0;//any movement input
-var _moving = player_spd_x!=0 or player_spd_y!=0 
+var _moving = player_spd_x!=0 or player_spd_y!=0; //is moving
 
 switch(player_status)
 	{
@@ -171,19 +171,34 @@ switch(player_status)
 	#region exhausted
 	case PLAYER_STATUS.exhausted:
 	
+	var _type = func_player_exhausted_sprite_get_type(sprite_index);
+	
+	#region start and loop
+	if _type == ExSprType.start
+		{
+		//set to looped anim
+		if img_looped
+			{
+			func_anim_sprite_set_full( func_player_exhausted_sprite_get(sprite_index,ExSprType.loop) );
+			}
+		}
+	#endregion
+	
+	#region end
+	var _reg_time_left = (player_stamina_max - player_stamina) / player_stamina_recovery; //stamina left to regen
+	if _type != ExSprType.endt and  player_exhausted_anim_end >= _reg_time_left
+		{
+		func_anim_sprite_set_full( func_player_exhausted_sprite_get(sprite_index,ExSprType.endt) );
+		}
+	#endregion
 	
 	
 	break;
 	#endregion
-	#region laying
-	case PLAYER_STATUS.laying:
+	#region downed
+	case PLAYER_STATUS.downed:
 		//sitting up   image index to situp effort
-		img_index = lerp(0,image_number-1,situp_value / situp_value_max);
-	break;
-	#endregion
-	#region sitting
-	case PLAYER_STATUS.sitting:
-		
+		img_index = lerp(0,image_number-1,downed_value / downed_value_max);
 	break;
 	#endregion
 	#region anim_lock
@@ -269,7 +284,26 @@ switch(player_status)
 				
 			break;
 			#endregion
+			#region hit => downed
+			case spr_player_hit_front:
+			case spr_player_hit_back:
 			
+				if img_looped//animation played through
+					{
+					func_player_status_set(PLAYER_STATUS.downed);
+					if sprite_index == spr_player_hit_front
+						func_anim_sprite_set_full(spr_player_downed_front);
+					else
+						func_anim_sprite_set_full(spr_player_downed_back);
+					
+					func_anim_image_set_speed(0);
+					
+					//x += 2 * combat_direction;
+					//img_display_x = x;
+					}
+				
+			break;
+			#endregion
 			}
 		
 		

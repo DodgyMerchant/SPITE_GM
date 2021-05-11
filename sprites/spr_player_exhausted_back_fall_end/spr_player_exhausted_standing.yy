@@ -77,8 +77,8 @@
   ],
   "nineSlice": null,
   "parent": {
-    "name": "anim",
-    "path": "folders/Player/sprites/anim.yy",
+    "name": "exhausted",
+    "path": "folders/Player/sprites/anim/exhausted.yy",
   },
   "resourceVersion": "1.0",
   "name": "spr_player_exhausted_standing",

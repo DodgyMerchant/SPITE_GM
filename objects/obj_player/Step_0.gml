@@ -12,9 +12,8 @@ input_sprint_p = keyboard_check_pressed(vk_shift);
 input_sprint_p = keyboard_check_pressed(vk_shift);
 //input_sprint_r = keyboard_check_released(vk_shift);
 
-//situp & standup
-input_situp = keyboard_check_pressed(vk_space);
-input_standup = input_move_pressed;
+//downed
+input_downed_standup = keyboard_check_pressed(vk_space);
 
 /////combat
 //attack
@@ -70,7 +69,7 @@ switch(player_status)
 			//stamina
 			if player_stamina == 0
 				{
-				func_player_exhausted();
+				func_player_exhausted(false);
 				}
 			}
 		
@@ -217,8 +216,7 @@ switch(player_status)
 		
 		if func_player_combat_is_brace_active() or func_player_combat_is_attack_active()
 			{//no movement
-			func_player_speed_reset();	//stop player movement
-			player_speed=0;				//player cant move
+			func_player_stop();
 			}
 		else//can move freely
 			{
@@ -242,7 +240,7 @@ switch(player_status)
 		if player_stamina == 0
 			{
 			//func_player_status_set(PLAYER_STATUS.exhausted);
-			func_player_exhausted();
+			func_player_exhausted(false);
 			}
 		
 		#endregion
@@ -271,72 +269,43 @@ switch(player_status)
 		//camera
 		Func_camera_seek_set_seek(x,y + player_cam_offset_y);
 		
-		//speed
-		func_player_speed_reset();	//stop player movement
-		player_speed=0;				//player cant move
-		
 		if player_stamina==player_stamina_max
 			func_player_status_set(PLAYER_STATUS.idle);
 		
 	break;
 	#endregion
-	#region laying
-	case PLAYER_STATUS.laying:
+	#region downed
+	case PLAYER_STATUS.downed:
 		//camera
-		Func_camera_seek_set_seek(x + laying_cam_offset_x,y + laying_cam_offset_y);
+		Func_camera_seek_set_seek(x + downed_cam_offset_x,y + downed_cam_offset_y);
 		//speed
 		player_speed = 0;
 		
 		//input
-		if input_situp
+		if input_downed_standup
 			{
-			situp_value += situp_value_add;
+			downed_value += downed_value_add;
 			
 			//stamina cost
-			func_player_stamina_drain(situp_stamina_drain);
+			func_player_stamina_drain(downed_stamina_drain);
 			}
 		else
-			situp_value = max(situp_value- situp_value_decrease,0);
+			downed_value = max(downed_value- downed_value_decrease,0);
 		
 		//standing up
-		if situp_value >= situp_value_max
-			{
-			
-			
-			//end
-			func_player_status_set(PLAYER_STATUS.sitting);
+		if downed_value >= downed_value_max
+			{//end
+			//first sprite set		//if sprite front then front	else back
+			var _fam = (image_index == spr_player_downed_front ? ExSprFam.front : ExSprFam.back);
+			func_anim_sprite_set_full( func_player_exhausted_sprite_get_from_family(_fam,ExSprType.loop) );
+			func_player_status_set(PLAYER_STATUS.exhausted);
 			}
 		//stamina decay
-		func_player_stamina_drain(laying_timeout_decay);
+		func_player_stamina_drain(downed_timeout_decay);
 		
 		if player_stamina == 0
 			func_player_death();
 		
-	break;
-	#endregion
-	#region sitting
-	case PLAYER_STATUS.sitting:
-		//camera
-		Func_camera_seek_set_seek(x + sit_cam_offset_x,y + sit_cam_offset_y);
-		//speed
-		player_speed = 0;
-		
-		if input_standup
-			{
-			//set sprite
-			if sprite_index != spr_player_standup
-				func_anim_sprite_set_full(spr_player_standup);
-			}
-		
-		//if animation done
-		if sprite_index == spr_player_standup
-			{
-			func_player_stamina_drain(standup_stamina_drain);
-			
-			if img_looped//anim complete
-				//end
-				func_player_status_set(PLAYER_STATUS.idle);
-			}
 	break;
 	#endregion
 	#region anim_lock
@@ -370,8 +339,7 @@ switch(player_status)
 				//camera same as combat
 				Func_camera_seek_set_seek(x + combat_cam_offset_x * combat_direction - combat_brace_pushback,y + player_cam_offset_y);
 				//speed
-				func_player_speed_reset();
-				player_speed=0;
+				func_player_stop();
 				
 				
 			break;

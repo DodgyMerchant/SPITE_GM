@@ -59,19 +59,16 @@ function Func_camera_seek_set_type(_type,_val)	//set target type value and posit
 
 function Func_camera_seek_calc()		//calculate camera moevement
 	{
+	if camera_seek_type == CAMERA_SEEK_TYPE.none
+		{
+		return
+		}
 	
 	var _dist = point_distance(camera_seek_pos_x,camera_seek_pos_y,camera_seek_target_x,camera_seek_target_y);
 	var _dir = point_direction(camera_seek_pos_x,camera_seek_pos_y,camera_seek_target_x,camera_seek_target_y);
 	
 	switch(camera_seek_type)
 		{
-		#region none
-		case CAMERA_SEEK_TYPE.none:
-			
-			_dist = 0;
-			
-		break;
-		#endregion
 		#region linear
 		case CAMERA_SEEK_TYPE.linear:
 			
@@ -97,11 +94,8 @@ function Func_camera_seek_calc()		//calculate camera moevement
 			show_debug_message("non viable cam type")
 		}
 	
-	if _dist != 0
-		{
-		camera_seek_pos_x += lengthdir_x(_dist,_dir);
-		camera_seek_pos_y += lengthdir_y(_dist,_dir);
-		}
+	camera_seek_pos_x += lengthdir_x(_dist,_dir);
+	camera_seek_pos_y += lengthdir_y(_dist,_dir);
 	
 	Func_camera_seek_apply();
 	}
