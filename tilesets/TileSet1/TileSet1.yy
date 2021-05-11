@@ -1,5 +1,4 @@
 {
-  "name": "TileSet1",
   "spriteId": {
     "name": "spr_tileset_grass_deep",
     "path": "sprites/spr_tileset_grass_deep/spr_tileset_grass_deep.yy",
@@ -55,6 +54,7 @@
     "path": "Carnal.yyp",
   },
   "resourceVersion": "1.0",
+  "name": "TileSet1",
   "tags": [],
   "resourceType": "GMTileSet",
 }

@@ -8,6 +8,7 @@
     {"id":{"name":"obj_test","path":"objects/obj_test/obj_test.yy",},"order":0,},
     {"id":{"name":"spr_blood_puddle","path":"sprites/spr_blood_puddle/spr_blood_puddle.yy",},"order":4,},
     {"id":{"name":"spr_player_walk_h_start","path":"sprites/spr_player_walk_h_start/spr_player_walk_h_start.yy",},"order":1,},
+    {"id":{"name":"obj_menu","path":"objects/obj_menu/obj_menu.yy",},"order":0,},
     {"id":{"name":"spr_player_combat_turnaround","path":"sprites/spr_player_combat_turnaround/spr_player_combat_turnaround.yy",},"order":2,},
     {"id":{"name":"obj_water","path":"objects/obj_water/obj_water.yy",},"order":0,},
     {"id":{"name":"spr_player_exhausted_back_fall_loop","path":"sprites/spr_player_exhausted_back_fall_loop/spr_player_exhausted_back_fall_loop.yy",},"order":1,},
@@ -34,8 +35,10 @@
     {"id":{"name":"spr_player_combat_walk","path":"sprites/spr_player_combat_walk/spr_player_combat_walk.yy",},"order":3,},
     {"id":{"name":"spr_tileset_grass_deep","path":"sprites/spr_tileset_grass_deep/spr_tileset_grass_deep.yy",},"order":2,},
     {"id":{"name":"spr_player_exhausted_back_fall_end","path":"sprites/spr_player_exhausted_back_fall_end/spr_player_exhausted_back_fall_end.yy",},"order":2,},
+    {"id":{"name":"spr_title","path":"sprites/spr_title/spr_title.yy",},"order":1,},
     {"id":{"name":"Draw_control","path":"scripts/Draw_control/Draw_control.yy",},"order":1,},
     {"id":{"name":"spr_player_exhausted_front_fall_loop","path":"sprites/spr_player_exhausted_front_fall_loop/spr_player_exhausted_front_fall_loop.yy",},"order":1,},
+    {"id":{"name":"rm_tutorial","path":"rooms/rm_tutorial/rm_tutorial.yy",},"order":4,},
     {"id":{"name":"spr_player_combat_attack_slash","path":"sprites/spr_player_combat_attack_slash/spr_player_combat_attack_slash.yy",},"order":2,},
     {"id":{"name":"spr_player_hit_back","path":"sprites/spr_player_hit_back/spr_player_hit_back.yy",},"order":0,},
     {"id":{"name":"fn_pixel","path":"fonts/fn_pixel/fn_pixel.yy",},"order":0,},
@@ -52,6 +55,7 @@
     {"id":{"name":"spr_player_combat_attack_recovery","path":"sprites/spr_player_combat_attack_recovery/spr_player_combat_attack_recovery.yy",},"order":1,},
     {"id":{"name":"shd_reflection","path":"shaders/shd_reflection/shd_reflection.yy",},"order":3,},
     {"id":{"name":"spr_player_exhausted_stand_loop","path":"sprites/spr_player_exhausted_stand_loop/spr_player_exhausted_stand_loop.yy",},"order":1,},
+    {"id":{"name":"rm_game","path":"rooms/rm_game/rm_game.yy",},"order":3,},
     {"id":{"name":"obj_camera","path":"objects/obj_camera/obj_camera.yy",},"order":1,},
     {"id":{"name":"parent_animsystem","path":"objects/parent_animsystem/parent_animsystem.yy",},"order":10,},
     {"id":{"name":"spr_player_combat_brace_hit_moving","path":"sprites/spr_player_combat_brace_hit_moving/spr_player_combat_brace_hit_moving.yy",},"order":3,},
@@ -69,7 +73,7 @@
     {"id":{"name":"System","path":"scripts/System/System.yy",},"order":8,},
     {"id":{"name":"Water_Reflect","path":"scripts/Water_Reflect/Water_Reflect.yy",},"order":2,},
     {"id":{"name":"Data_Handling","path":"scripts/Data_Handling/Data_Handling.yy",},"order":5,},
-    {"id":{"name":"rm_game","path":"rooms/rm_game/rm_game.yy",},"order":0,},
+    {"id":{"name":"parent_room","path":"rooms/parent_room/parent_room.yy",},"order":0,},
   ],
   "Options": [
     {"name":"Linux","path":"options/linux/options_linux.yy",},
@@ -87,6 +91,8 @@
   "RoomOrderNodes": [
     {"roomId":{"name":"rm_init","path":"rooms/rm_init/rm_init.yy",},},
     {"roomId":{"name":"rm_game","path":"rooms/rm_game/rm_game.yy",},},
+    {"roomId":{"name":"rm_tutorial","path":"rooms/rm_tutorial/rm_tutorial.yy",},},
+    {"roomId":{"name":"parent_room","path":"rooms/parent_room/parent_room.yy",},},
   ],
   "Folders": [
     {"folderPath":"folders/Rooms.yy","order":0,"resourceVersion":"1.0","name":"Rooms","tags":[],"resourceType":"GMFolder",},
@@ -113,6 +119,7 @@
     {"folderPath":"folders/Player/sprites/anim/exhausted/stand.yy","order":2,"resourceVersion":"1.0","name":"stand","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Player/sprites/anim/downed.yy","order":10,"resourceVersion":"1.0","name":"downed","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Player/sprites/anim/hit.yy","order":11,"resourceVersion":"1.0","name":"hit","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/systems/menu.yy","order":11,"resourceVersion":"1.0","name":"menu","tags":[],"resourceType":"GMFolder",},
   ],
   "AudioGroups": [
     {"targets":-1,"resourceVersion":"1.3","name":"audiogroup_default","resourceType":"GMAudioGroup",},

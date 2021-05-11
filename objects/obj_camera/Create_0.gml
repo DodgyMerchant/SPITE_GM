@@ -22,7 +22,7 @@ application_surface_enable(false);
 global.View_width = 100;
 global.View_height = 100;
 window_size = 8;
-global.gui_size = 8;
+global.gui_size = 1;
 
 // prevent default scaling behaviour:
 surface_resize(application_surface, global.View_width, global.View_height);

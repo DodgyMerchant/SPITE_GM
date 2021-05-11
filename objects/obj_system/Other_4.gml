@@ -1,10 +1,10 @@
 /// @desc 
 
 
-if room == rm_game
+switch(room)
 	{
-	func_init_game();
-	
-	
-	
+	case rm_game:
+	case rm_tutorial:
+		func_init_level();
+	break;
 	}

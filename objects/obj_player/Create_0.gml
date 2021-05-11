@@ -65,6 +65,14 @@ func_player_status_set = function(_status)
 			
 		break;
 		#endregion
+		#region laying_menu
+		case PLAYER_STATUS.laying_menu:
+			
+			
+			
+			
+		break;
+		#endregion
 		
 		
 		default: show_debug_message("func_player_status_set /// CLEAN UP /// STATUS NOT FOUND!!!");
@@ -148,6 +156,17 @@ func_player_status_set = function(_status)
 			
 			//stamina
 			player_stamina_recovery_time= -1;//disabled
+			player_stamina_recovery		= 0;
+		break;
+		#endregion
+		#region laying_menu
+		case PLAYER_STATUS.laying_menu:
+			
+			func_anim_sprite_set_full(spr_player_downed_back);
+			func_anim_image_set_speed(0);
+			
+			//stamina
+			player_stamina_recovery_time= -1;
 			player_stamina_recovery		= 0;
 		break;
 		#endregion
@@ -701,5 +720,5 @@ func_player_exhausted_sprite_get = function(_spr,_want)
 
 //game gaming
 
-func_player_status_set(PLAYER_STATUS.idle);
-Func_camera_seek_set_pos(x,y);
+//func_player_status_set(PLAYER_STATUS.idle);
+//Func_camera_seek_set_pos(x,y);

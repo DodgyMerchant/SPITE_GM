@@ -311,6 +311,14 @@ switch(player_status)
 		
 	break;
 	#endregion
+	#region laying_menu
+	case PLAYER_STATUS.laying_menu:
+		
+		
+		
+		
+	break;
+	#endregion
 	default: show_debug_message("End Step /// image /// STATUS NOT FOUND!!!");
 	}
 

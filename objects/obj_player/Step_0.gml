@@ -358,6 +358,18 @@ switch(player_status)
 		
 	break;
 	#endregion
+	#region laying_menu
+	case PLAYER_STATUS.laying_menu:
+		
+		
+		
+		if !instance_exists(obj_menu)
+			{
+			func_player_status_set(PLAYER_STATUS.downed);
+			}
+		
+	break;
+	#endregion
 	default: show_debug_message("Step status /// STATUS NOT FOUND!!!");
 	}
 

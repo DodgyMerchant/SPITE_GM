@@ -1,6 +1,5 @@
 
 
-
 function Func_camera_set_pos_center(_x,_y)
 	{
 	Func_camera_set_pos(_x - global.View_width/2,_y - global.View_height/2);
@@ -12,7 +11,6 @@ function Func_camera_set_pos(_x,_y)
 	global.View_x = _x;
 	global.View_y = _y;
 	}
-
 
 //seek system
 
@@ -36,7 +34,7 @@ function Func_camera_seek_set_seek(_x,_y)		//set target position
 		}
 	}
 
-function Func_camera_seek_set_pos(_x,_y)	//sets the camera position
+function Func_camera_seek_set_pos(_x,_y)		//sets all the cameras positions
 	{
 	with (obj_camera)
 		{
@@ -57,7 +55,7 @@ function Func_camera_seek_set_type(_type,_val)	//set target type value and posit
 		}
 	}
 
-function Func_camera_seek_calc()		//calculate camera moevement
+function Func_camera_seek_calc()				//calculate camera moevement
 	{
 	if camera_seek_type == CAMERA_SEEK_TYPE.none
 		{
@@ -100,12 +98,12 @@ function Func_camera_seek_calc()		//calculate camera moevement
 	Func_camera_seek_apply();
 	}
 
-function Func_camera_seek_apply()		//apply camera 
+function Func_camera_seek_apply()				//apply camera 
 	{
 	Func_camera_set_pos_center(camera_seek_pos_x,camera_seek_pos_y);
 	}
 
-function Func_camera_seek_disable()		//apply camera 
+function Func_camera_seek_disable()			//disable seek
 	{
 	with (obj_camera)
 		{
@@ -114,12 +112,14 @@ function Func_camera_seek_disable()		//apply camera
 		}
 	}
 
-function Func_camera_point_in_view(_x,_y)	//get if point is in camera view
+/////////questions
+
+function Func_camera_point_in_view(_x,_y)		//get if point is in camera view
 	{
 	return point_in_rectangle(_x,_y,global.View_x,global.View_y,global.View_x + global.View_width,global.View_y + global.View_height);
 	}
 
-function Func_camera_obj_in_view(_id)		//if obj bbox is in camera | return 1-4 == true	| return 0 == false
+function Func_camera_obj_in_view(_id)			//if obj bbox is in camera | return 1-4 == true	| return 0 == false
 	{
 	var _x,_y;
 	var i=1;
